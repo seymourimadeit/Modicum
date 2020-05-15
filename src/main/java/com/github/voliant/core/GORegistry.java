@@ -1,13 +1,11 @@
 package com.github.voliant.core;
 
 import com.github.voliant.common.GlowingObsidianBlock;
-import com.google.common.base.Supplier;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 

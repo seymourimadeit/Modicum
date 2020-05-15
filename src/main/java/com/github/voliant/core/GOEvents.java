@@ -1,8 +1,6 @@
 package com.github.voliant.core;
 
-import com.github.voliant.common.GlowingObsidianBlock;
 import net.minecraft.block.Blocks;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
