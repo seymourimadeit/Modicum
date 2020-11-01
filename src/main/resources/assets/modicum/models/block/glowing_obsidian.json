@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "glowingobsidian:block/glowing_obsidian"
+        "all": "modicum:block/glowing_obsidian"
     }
 }

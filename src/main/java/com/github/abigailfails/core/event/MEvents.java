@@ -1,7 +1,7 @@
-package com.github.voliant.core.event;
+package com.github.abigailfails.core.event;
 
-import com.github.voliant.core.registry.MBlocks;
-import com.github.voliant.core.Modicum;
+import com.github.abigailfails.core.registry.MBlocks;
+import com.github.abigailfails.core.Modicum;
 import net.minecraft.block.Blocks;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

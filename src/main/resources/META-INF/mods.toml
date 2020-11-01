@@ -14,17 +14,17 @@ issueTrackerURL="https://github.com/Voliant/Modicum/issues" #optional
 # The modid of the mod
 modId="modicum" #mandatory
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
-version="${version}" #mandatory
+version="${file.jarVersion}" #mandatory
  # A display name for the mod
 displayName="Modicum" #mandatory
 # A URL for the "homepage" for this mod, displayed in the mod UI
 #displayURL="http://example.com/" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-logoFile="glowingobsidian.png" #optional
+logoFile="modicum.png" #optional
 # A text field displayed in the mod UI
-credits="Cameron from Minecraft Abnormals, who inspired the glowing obsidian feature." #optional
+#credits="" #optional
 # A text field displayed in the mod UI
-authors="Voliant" #optional
+authors="abigailfails" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 Adds small, configurable features that fit in with vanilla.
@@ -36,7 +36,7 @@ Adds small, configurable features that fit in with vanilla.
     # Does this dependency have to exist - if not, ordering below must be specified
     mandatory=true #mandatory
     # The version range of the dependency
-    versionRange="[31,)" #mandatory
+    versionRange="[32,)" #mandatory
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
@@ -45,7 +45,7 @@ Adds small, configurable features that fit in with vanilla.
 [[dependencies.modicum]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.15.2]"
+    versionRange="[1.16.1]"
     ordering="NONE"
     side="BOTH"
 [[dependencies.modicum]]

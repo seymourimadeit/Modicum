@@ -1,4 +1,4 @@
-package com.github.voliant.common;
+package com.github.abigailfails.common;
 
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
@@ -22,14 +22,18 @@ public class GlowingObsidianBlock extends Block {
         super(Block.Properties.create(Material.ROCK, MaterialColor.OBSIDIAN).harvestLevel(5).hardnessAndResistance(5.0F, 1200.0F).sound(SoundType.STONE));
     }
 
+    //TODO change to random tick
     @SuppressWarnings("deprecation")
     @Override
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
         BubbleColumnBlock.placeBubbleColumn(worldIn, pos.up(), true);
-        if(shouldBeCooled(worldIn, pos)&&rand.nextInt(400)==100){
+        if(shouldBeCooled(worldIn, pos)/*&&rand.nextInt(400)==100*/){
             worldIn.setBlockState(pos, Blocks.OBSIDIAN.getDefaultState());
         }
     }
+
+    //TODO add proper pickaxe settings thing
+    //TODO make it work with bubble column (forge PR?)
 
     @Override
     public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {
