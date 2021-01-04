@@ -1,42 +1,39 @@
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        maven { url = 'https://dist.creeper.host/Sponge/maven' }
+        maven { url = "https://files.minecraftforge.net/maven" }
+        maven { url = "https://dist.creeper.host/Sponge/maven" }
         jcenter()
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "3.+", changing: true
         classpath group: "org.spongepowered", name: "mixingradle", version: "0.7-SNAPSHOT"
-
     }
 }
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
+
+apply plugin: "net.minecraftforge.gradle"
+apply plugin: "eclipse"
+apply plugin: "maven-publish"
 apply plugin: "org.spongepowered.mixin"
 
 mixin {
     add sourceSets.main, "modicum.refmap.json"
 }
 
+version = "${project.minecraft}-${project.modVersion}"
+group = "com.github.abigailfails"
+archivesBaseName = project.modId
 
-version = '0.1.1'
-group = 'com.github.abigailfails'
-archivesBaseName = 'modicum-1.16.4'
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = "1.8"
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
-
-println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-
-    mappings channel: 'snapshot', version: '20201028-1.16.3'
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    mappings channel: project.mappingsChannel, version: project.mappings
+    accessTransformer = file("src/main/resources/META-INF/accesstransformer.cfg")
     runs {
         client {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
+            workingDirectory project.file("run")
+            property "forge.logging.markers", "SCAN,REGISTRIES,REGISTRYDUMP"
+            property "forge.logging.console.level", "debug"
             property "mixin.env.disableRefMap", "true"
             arg "-mixin.config=modicum.mixins.json"
             mods {
@@ -45,11 +42,10 @@ minecraft {
                 }
             }
         }
-
         server {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
+            workingDirectory project.file("run")
+            property "forge.logging.markers", "SCAN,REGISTRIES,REGISTRYDUMP"
+            property "forge.logging.console.level", "debug"
             property "mixin.env.disableRefMap", "true"
             arg "-mixin.config=modicum.mixins.json"
             mods {
@@ -58,12 +54,11 @@ minecraft {
                 }
             }
         }
-
         data {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            workingDirectory project.file("run")
+            property "forge.logging.markers", "SCAN,REGISTRIES,REGISTRYDUMP"
+            property "forge.logging.console.level", "debug"
+            args "--mod", "modicum", "--all", "--output", file("src/generated/resources/")
             mods {
                 modicum {
                     source sourceSets.main
@@ -73,25 +68,28 @@ minecraft {
     }
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
-
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.4-35.1.0'
+    minecraft "net.minecraftforge:forge:${project.minecraft}-${project.forge}"
+    implementation fg.deobf("curse.maven:abnormals_core-382216:${project.abnormalsCore}")
+}
+
+repositories {
+    maven {
+        url "https://www.cursemaven.com"
+    }
 }
 
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "Modicum",
+                "Specification-Title"     : project.modName,
                 "Specification-Vendor"    : "abigailfails",
                 "Specification-Version"   : "1",
-                "Implementation-Title"    : project.name,
-                "Implementation-Version"  : "${version}",
-                "Implementation-Vendor"   :"abigailfails",
+                "Implementation-Title"    : project.modName,
+                "Implementation-Version"  : project.modVersion,
+                "Implementation-Vendor"   : "abigailfails",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
                 "MixinConfigs"            : "modicum.mixins.json"
         ])
     }
 }
-
-jar.finalizedBy('reobfJar')
