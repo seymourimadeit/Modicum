@@ -11,6 +11,7 @@ public class ModicumConfig {
         public final ConfigValue<Boolean> cauldronDispenserBehavior;
         public final ConfigValue<Boolean> jukeboxDispenserBehavior;
         public final ConfigValue<Boolean> tntDropping;
+        public final ConfigValue<Boolean> tntDefusing;
 
         public Common(ForgeConfigSpec.Builder builder) {
             hotbarArmorSwapping = builder
@@ -29,6 +30,10 @@ public class ModicumConfig {
                     .comment("If you have TNT and flint and steel/a fire charge in your hands, right clicking while flying with an elytra places lit TNT at your location")
                     .translation(Modicum.MOD_ID + ".config.tntDropping")
                     .define("TNT Dropping", true);
+            tntDefusing = builder
+                    .comment("If you right click a lit TNT entity with shears, it defuses and drops a TNT item")
+                    .translation(Modicum.MOD_ID + ".config.tntDefusing")
+                    .define("TNT Defusing", true);
         }
     }
 

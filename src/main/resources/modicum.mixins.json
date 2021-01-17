@@ -3,7 +3,7 @@
   "package": "com.github.abigailfails.modicum.core.mixin",
   "compatibilityLevel": "JAVA_8",
   "minVersion": "0.8",
-  "refmap": "savageandravage.refmap.json",
+  "refmap": "modicum.refmap.json",
   "mixins": [
 
   ],

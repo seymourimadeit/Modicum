@@ -61,17 +61,13 @@ public class ModicumDispenseBehaviors {
                     if (state.get(CauldronBlock.LEVEL) != 0) {
                         ((CauldronBlock) state.getBlock()).setWaterLevel(source.getWorld(), offsetPos(source), state, state.get(CauldronBlock.LEVEL) - 1);
                         this.setSuccessful(true);
-                        ItemStack filled = stack = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER);
+                        ItemStack filled = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER);
                         stack.shrink(1);
                         if (stack.isEmpty()) {
-                            return filled.copy();
-                        } else {
-                            if (source.<DispenserTileEntity>getBlockTileEntity().addItemStack(filled.copy()) < 0) {
-                                new DefaultDispenseItemBehavior().dispense(source, filled.copy());
-                            }
-                            return stack;
+                            stack = filled.copy();
+                        } else if (source.<DispenserTileEntity>getBlockTileEntity().addItemStack(filled.copy()) < 0) {
+                            new DefaultDispenseItemBehavior().dispense(source, filled.copy());
                         }
-
                     }
                     return stack;
                 }
