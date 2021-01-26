@@ -1,4 +1,5 @@
 {
-  "block.modicum.assembler": "Assembler",
+  "item.modicum.fireball": "Fireball",
+  "block.modicum.assembler": "Assembler (THIS WILL CRASH IF YOU OPEN IT)",
   "container.modicum.assembler": "Assembler"
 }

@@ -1,6 +1,7 @@
 package com.github.abigailfails.modicum.core.registry;
 
 import com.github.abigailfails.modicum.core.ModicumConfig;
+import com.github.abigailfails.modicum.core.event.ModicumEvents;
 import com.minecraftabnormals.abnormals_core.core.util.DataUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CauldronBlock;
@@ -9,10 +10,12 @@ import net.minecraft.block.JukeboxBlock;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.OptionalDispenseBehavior;
+import net.minecraft.entity.item.TNTEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.MusicDiscItem;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.tileentity.DispenserTileEntity;
@@ -20,10 +23,13 @@ import net.minecraft.tileentity.JukeboxTileEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Map;
+import java.util.Random;
 
+import static com.minecraftabnormals.abnormals_core.core.util.BlockUtil.getEntitiesAtOffsetPos;
 import static com.minecraftabnormals.abnormals_core.core.util.BlockUtil.getStateAtOffsetPos;
 import static com.minecraftabnormals.abnormals_core.core.util.BlockUtil.offsetPos;
 
@@ -146,6 +152,19 @@ public class ModicumDispenseBehaviors {
                     return stack;
                 }
             }));
+        }
+        if (ModicumConfig.COMMON.tntDefusing.get()) {
+            DataUtil.registerAlternativeDispenseBehavior(Items.SHEARS, (source, stack) -> !getEntitiesAtOffsetPos(source, TNTEntity.class).isEmpty(), new DefaultDispenseItemBehavior() {
+                @Override
+                protected ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
+                    TNTEntity tnt = getEntitiesAtOffsetPos(source, TNTEntity.class).get(0);
+                    World world = source.getWorld();
+                    world.playSound(null, tnt.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.PLAYERS, 1.0f, 1.0f);
+                    if (stack.attemptDamageItem(1, source.getWorld().getRandom(), null)) stack.setCount(0); //might need to set count to 0
+                    ModicumEvents.extinguishTNT(tnt, world);
+                    return stack;
+                }
+            });
         }
     }
 }
