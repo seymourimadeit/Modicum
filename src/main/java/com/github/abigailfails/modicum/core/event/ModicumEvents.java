@@ -2,6 +2,7 @@ package com.github.abigailfails.modicum.core.event;
 
 import com.github.abigailfails.modicum.core.Modicum;
 import com.github.abigailfails.modicum.core.ModicumConfig;
+
 import com.minecraftabnormals.abnormals_core.core.events.AnimateTickEvent;
 import net.minecraft.block.AbstractRailBlock;
 import net.minecraft.block.BlockState;
@@ -28,7 +29,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -174,10 +174,5 @@ public class ModicumEvents {
                 event.getWorld().addParticle(ParticleTypes.NOTE, (double)pos.getX() + 0.5D, (double)pos.getY() + 1.2D, (double)pos.getZ() + 0.5D, (double)event.getRandom().nextInt(25) / 24.0D, 0.0D, 0.0D);
             }
         }
-    }
-
-    @SubscribeEvent
-    public static void onPotionShift(GuiScreenEvent.PotionShiftEvent event) {
-        event.setCanceled(true);
     }
 }
