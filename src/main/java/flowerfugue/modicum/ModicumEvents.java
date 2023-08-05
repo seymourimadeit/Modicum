@@ -20,6 +20,7 @@ public class ModicumEvents {
     public static void rightClickEntity(PlayerInteractEvent.EntityInteract event) {
         ItemStack stack = event.getItemStack();
         if (event.getTarget() instanceof PrimedTnt primedTnt && stack.getItem() instanceof ShearsItem) {
+            event.getEntity().swing(event.getHand(), true);
             primedTnt.remove(Entity.RemovalReason.DISCARDED);
         }
     }
@@ -31,7 +32,7 @@ public class ModicumEvents {
         ItemStack offHandStack = player.getOffhandItem();
         ItemStack tntStack = mainHandStack.getItem() instanceof BlockItem && ((BlockItem) mainHandStack.getItem()).getBlock() instanceof TntBlock ? mainHandStack : offHandStack.getItem() instanceof BlockItem && ((BlockItem) offHandStack.getItem()).getBlock() instanceof TntBlock ? offHandStack : null;
         ItemStack ignitionSource = (mainHandStack.getItem() instanceof FlintAndSteelItem ? mainHandStack : mainHandStack.getItem() instanceof FireChargeItem ? mainHandStack : offHandStack.getItem() instanceof FlintAndSteelItem ? offHandStack : offHandStack.getItem() instanceof FireChargeItem ? offHandStack : null);
-        if (tntStack != null && ignitionSource != null) {
+        if (tntStack != null && ignitionSource != null && !player.getCooldowns().isOnCooldown(tntStack.getItem())) {
             player.swing(event.getHand(), true);
             BlockPos pos = player.blockPosition().relative(player.getDirection());
             BlockState tntState = ((BlockItem) tntStack.getItem()).getBlock().defaultBlockState();
